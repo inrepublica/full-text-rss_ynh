@@ -59,6 +59,13 @@ ynh_app_setting_set --app=$app --key=extraction_rules --value=$extraction_rules
 #=================================================
 # STANDARD MODIFICATIONS
 #=================================================
+# INSTALL DEPENDENCIES
+#=================================================
+ynh_script_progression --message="Installing dependencies..." --time --weight=1
+
+ynh_install_app_dependencies $pkg_dependencies
+
+#=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression --message="Setting up source files..." --time --weight=1

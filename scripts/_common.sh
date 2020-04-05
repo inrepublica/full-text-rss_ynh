@@ -4,6 +4,9 @@
 # COMMON VARIABLES
 #=================================================
 
+# dependencies used by the app
+pkg_dependencies="php-tidy php-apcu php-zip"
+
 #=================================================
 # PERSONAL HELPERS
 #=================================================

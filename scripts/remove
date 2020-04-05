@@ -22,6 +22,14 @@ final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 #=================================================
 # STANDARD REMOVE
 #=================================================
+# REMOVE DEPENDENCIES
+#=================================================
+ynh_script_progression --message="Removing dependencies..." --time --weight=1
+
+# Remove metapackage and its dependencies
+ynh_remove_app_dependencies
+
+#=================================================
 # REMOVE APP MAIN DIR
 #=================================================
 ynh_script_progression --message="Removing app main directory..." --time --weight=1

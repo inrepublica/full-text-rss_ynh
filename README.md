@@ -18,7 +18,7 @@ If you don't have YunoHost, please see [here](https://yunohost.org/#/install) to
 - [X] Upgrade script
 - [ ] Add php-tidy package
 - [ ] Add php-apcu package
-- [ ] Add php-apcu package
+- [ ] Add php-zip package
 - [ ] Remove extraction_rules download
 - [ ] Private site, usefull?
 
