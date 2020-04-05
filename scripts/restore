@@ -79,6 +79,9 @@ chown -R $app $final_path/custom_config.php
 # Set permissions to $app for cache subfolder
 chown -R $app $final_path/cache
 
+# Set permissions to $app for site_config subfolder (necessary to use in app update process)
+chown -R $app $final_path/site_config
+
 #=================================================
 # RESTORE THE PHP-FPM CONFIGURATION
 #=================================================
@@ -94,15 +97,6 @@ ynh_script_progression --message="Reinstalling dependencies..." --time --weight=
 
 # Define and install dependencies
 ynh_install_app_dependencies $pkg_dependencies
-
-#=================================================
-# RESTORE FAIL2BAN CONFIGURATION
-#=================================================
-# ynh_script_progression --message="Restoring the fail2ban configuration..." --time --weight=1
-
-# ynh_restore_file "/etc/fail2ban/jail.d/$app.conf"
-# ynh_restore_file "/etc/fail2ban/filter.d/$app.conf"
-# ynh_systemd_action --action=restart --service_name=fail2ban
 
 #=================================================
 # GENERIC FINALIZATION

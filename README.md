@@ -7,21 +7,6 @@
 > *This package allow you to install Full-Text-RSS quickly and simply on a YunoHost server.  
 If you don't have YunoHost, please see [here](https://yunohost.org/#/install) to know how to install and enjoy it.*
 
-## To Do
-
-- [X] Install script
-- [X] store user / password
-- [X] Remove script
-- [X] Change url script
-- [X] Backup script
-- [X] Restore script
-- [X] Upgrade script
-- [ ] Add php-tidy package
-- [ ] Add php-apcu package
-- [ ] Add php-zip package
-- [ ] Remove extraction_rules download
-- [ ] Private site, usefull?
-
 ## Overview
 
 Full-Text RSS can transform partial web feeds — often summary-only feeds which expect you to visit cluttered, ad-ridden site to read the full story — to deliver the full content stripped of clutter and ads.
@@ -59,6 +44,12 @@ Access web admin area in http://yourdomain/your_path/admin/
 
 ## Links
 * Full-Text-RSS website: https://fivefilters.org/content-only/
+
+## To Do
+
+- [ ] Remove extraction_rules download
+- [ ] If site is private, only open RSS feed
+- [ ] Problème de droit sur config_standard
 ---
 
 Developers info
