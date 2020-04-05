@@ -76,19 +76,6 @@
                     "fr": "Attention, mettre cette application en publique vous expose a une grande consommation de ressource serveur."
                 },
                 "default": false
-            },
-			{
-                "name": "extraction_rules",
-				"type": "boolean",
-                "ask": {
-                    "en": "Download site-specific extraction rules?",
-                    "fr": "Télécharger les règles d'extraction spécifiques pour les sites supplémentaires?"
-                },
-				"help": {
-                    "en": "Site-specific article extraction rules to aid content extractors, feed readers, and 'read later' applications.",
-                    "fr": "Des règles d'extraction d'articles spécifiques aux sites pour aider à extraire des contenus."
-                },
-                "default": true
             }
         ]
     }

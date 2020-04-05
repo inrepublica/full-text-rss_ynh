@@ -47,9 +47,9 @@ Access web admin area in http://yourdomain/your_path/admin/
 
 ## To Do
 
-- [ ] Remove extraction_rules download
+- [X] Remove extraction_rules download
 - [ ] If site is private, only open RSS feed
-- [ ] Problème de droit sur config_standard
+
 ---
 
 Developers info

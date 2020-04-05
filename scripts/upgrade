@@ -21,7 +21,6 @@ path_url=$(ynh_app_setting_get --app=$app --key=path)
 admin=$(ynh_app_setting_get --app=$app --key=admin)
 password=$(ynh_app_setting_get --app=$app --key=password)
 is_public=$(ynh_app_setting_get --app=$app --key=is_public)
-extraction_rules=$(ynh_app_setting_get --app=$app --key=extraction_rules)
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 
 
@@ -149,19 +148,6 @@ ynh_replace_string --match_string="admin_credentials = array('username'=>'admin'
 ynh_backup_if_checksum_is_different --file="$final_path/config.php"
 # Recalculate and store the checksum of the file for the next upgrade.
 ynh_store_file_checksum --file="$final_path/config.php"
-
-#=================================================
-# DOWNLOAD SITE SPECIFIC EXTRACTION RULES
-#=================================================
-
-if [ $extraction_rules -eq 1 ]
-then
-	### Cleaning the folder
-	ynh_secure_remove --file="$final_path/site_config/standard"
-
-	### Use git to download
-	git clone https://github.com/fivefilters/ftr-site-config $final_path/site_config/standard
-fi
 
 #=================================================
 # GENERIC FINALIZATION
