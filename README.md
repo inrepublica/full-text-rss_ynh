@@ -16,7 +16,11 @@ If you don't have YunoHost, please see [here](https://yunohost.org/#/install) to
 - [X] Backup script
 - [X] Restore script
 - [X] Upgrade script
-- [ ] Config Fail2Ban (Search log in Nginx)
+- [ ] Add php-tidy package
+- [ ] Add php-apcu package
+- [ ] Add php-apcu package
+- [ ] Remove extraction_rules download
+- [ ] Private site, usefull?
 
 ## Overview
 
