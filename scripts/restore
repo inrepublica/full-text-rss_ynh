@@ -68,6 +68,7 @@ ynh_system_user_create --username=$app
 #=================================================
 # RESTORE USER RIGHTS
 #=================================================
+ynh_script_progression --message="Secure Files..." --time --weight=1
 
 # Restore permissions on app files
 chown -R root: $final_path

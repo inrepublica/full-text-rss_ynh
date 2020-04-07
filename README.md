@@ -45,10 +45,6 @@ Access web admin area in http://yourdomain/your_path/admin/
 ## Links
 * Full-Text-RSS website: https://fivefilters.org/content-only/
 
-## To Do
-
-- [ ] If site is private, only open RSS feed
-
 ---
 
 Developers info

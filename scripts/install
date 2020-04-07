@@ -138,6 +138,7 @@ ynh_store_file_checksum --file="$final_path/custom_config.php"
 #=================================================
 # SECURE FILES AND DIRECTORIES
 #=================================================
+ynh_script_progression --message="Secure Files..." --time --weight=1
 
 ### For security reason, any app should set the permissions to root: before anything else.
 ### Then, if write authorization is needed, any access should be given only to directories
@@ -166,7 +167,14 @@ then
 	# unprotected_uris allows SSO credentials to be passed anyway.
 	ynh_app_setting_set --app=$app --key=unprotected_uris --value="/"
 else
-    ynh_app_setting_set --app=$app --key=unprotected_regex --value="/makefulltextfeed.php\?url=.*$"
+	# If the app is private, makefeed stays publicly accessible.
+	if [ "$path_url" == "/" ]; then
+	    # If the path is /, clear it to prevent any error with the regex.
+	    path_url=""
+	fi
+	# Modify the domain to be used in a regex
+	domain_regex=$(echo "$domain" | sed 's@-@.@g')
+    ynh_app_setting_set --app=$app --key=unprotected_regex --value="$domain_regex$path_url/.+$"
 fi
 
 #=================================================
