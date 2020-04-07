@@ -29,6 +29,9 @@ ynh_script_progression --message="Loading installation settings..." --time --wei
 # Needed for helper "ynh_add_nginx_config"
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 
+# Needed to update SSOWAT
+is_public=$(ynh_app_setting_get --app=$app --key=is_public)
+
 #=================================================
 # BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
 #=================================================
@@ -91,6 +94,26 @@ then
 	mv $nginx_conf_path /etc/nginx/conf.d/$new_domain.d/$app.conf
 	# Store file checksum for the new config file location
 	ynh_store_file_checksum --file="/etc/nginx/conf.d/$new_domain.d/$app.conf"
+fi
+
+#=================================================
+# UPDATE SSOWAT
+#=================================================
+ynh_script_progression --message="Reconfiguring SSOwat..."
+
+if [ $is_public -eq 1 ]
+then
+	# unprotected_uris allows SSO credentials to be passed anyway.
+	ynh_app_setting_set --app=$app --key=unprotected_uris --value="/"
+else
+	# If the app is private, makefeed stays publicly accessible.
+	if [ "$path_url" == "/" ]; then
+	    # If the path is /, clear it to prevent any error with the regex.
+	    path_url=""
+	fi
+	# Modify the domain to be used in a regex
+	domain_regex=$(echo "$domain" | sed 's@-@.@g')
+    ynh_app_setting_set --app=$app --key=unprotected_regex --value="$domain_regex$path_url/.+$"
 fi
 
 #=================================================
