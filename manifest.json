@@ -6,7 +6,7 @@
         "en": "Full-Text RSS transform partial web feeds into full feeds.",
         "fr": "Full-Text RSS transforme un flux RSS tronqué en un flux complet."
     },
-	"version": "1.1~ynh1",
+	"version": "3.8~ynh1",
     "url": "https://bitbucket.org/fivefilters/full-text-rss",
     "license": "free",
     "maintainer": {
@@ -76,19 +76,6 @@
                     "fr": "Attention, mettre cette application en publique vous expose a une grande consommation de ressource serveur."
                 },
                 "default": false
-            },
-			{
-                "name": "extraction_rules",
-				"type": "boolean",
-                "ask": {
-                    "en": "Download site-specific extraction rules?",
-                    "fr": "Télécharger les règles d'extraction spécifiques pour les sites supplémentaires?"
-                },
-				"help": {
-                    "en": "Site-specific article extraction rules to aid content extractors, feed readers, and 'read later' applications.",
-                    "fr": "Des règles d'extraction d'articles spécifiques aux sites pour aider à extraire des contenus."
-                },
-                "default": true
             }
         ]
     }

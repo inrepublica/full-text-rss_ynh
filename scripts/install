@@ -29,7 +29,6 @@ path_url=$YNH_APP_ARG_PATH
 admin=$YNH_APP_ARG_ADMIN
 password=$YNH_APP_ARG_PASSWORD
 is_public=$YNH_APP_ARG_IS_PUBLIC
-extraction_rules=$YNH_APP_ARG_EXTRACTION_RULES
 
 app=$YNH_APP_INSTANCE_NAME
 
@@ -54,7 +53,6 @@ ynh_app_setting_set --app=$app --key=path --value=$path_url
 ynh_app_setting_set --app=$app --key=admin --value=$admin
 ynh_app_setting_set --app=$app --key=admin --value=$password
 ynh_app_setting_set --app=$app --key=is_public --value=$is_public
-ynh_app_setting_set --app=$app --key=extraction_rules --value=$extraction_rules
 
 #=================================================
 # STANDARD MODIFICATIONS
@@ -136,23 +134,11 @@ ynh_replace_string --match_string="admin_credentials = array('username'=>'admin'
 ynh_store_file_checksum --file="$final_path/custom_config.php"
 
 #=================================================
-# DOWNLOAD SITE SPECIFIC EXTRACTION RULES
-#=================================================
-
-if [ $extraction_rules -eq 1 ]
-then
-	### Cleaning the folder
-	ynh_secure_remove --file="$final_path/site_config/standard"
-
-	### Use git to download
-	git clone https://github.com/fivefilters/ftr-site-config $final_path/site_config/standard
-fi
-
-#=================================================
 # GENERIC FINALIZATION
 #=================================================
 # SECURE FILES AND DIRECTORIES
 #=================================================
+ynh_script_progression --message="Secure Files..." --time --weight=1
 
 ### For security reason, any app should set the permissions to root: before anything else.
 ### Then, if write authorization is needed, any access should be given only to directories
@@ -168,24 +154,27 @@ chown -R $app $final_path/custom_config.php
 # Set permissions to $app for cache subfolder
 chown -R $app $final_path/cache
 
-#=================================================
-# SETUP FAIL2BAN
-#=================================================
-### ynh_script_progression --message="Configuring fail2ban..." --time --weight=1
-
-# Create a dedicated fail2ban config
-### ynh_add_fail2ban_config --logpath="/var/log/nginx/${domain}-error.log" --failregex="Regex to match into the log for a failed login"
+# Set permissions to $app for site_config subfolder (necessary to use in app update process)
+chown -R $app $final_path/site_config
 
 #=================================================
 # SETUP SSOWAT
 #=================================================
 ynh_script_progression --message="Configuring SSOwat..." --time --weight=1
 
-# Make app public if necessary
 if [ $is_public -eq 1 ]
 then
 	# unprotected_uris allows SSO credentials to be passed anyway.
 	ynh_app_setting_set --app=$app --key=unprotected_uris --value="/"
+else
+	# If the app is private, makefeed stays publicly accessible.
+	if [ "$path_url" == "/" ]; then
+	    # If the path is /, clear it to prevent any error with the regex.
+	    path_url=""
+	fi
+	# Modify the domain to be used in a regex
+	domain_regex=$(echo "$domain" | sed 's@-@.@g')
+    ynh_app_setting_set --app=$app --key=unprotected_regex --value="$domain_regex$path_url/.+$"
 fi
 
 #=================================================
